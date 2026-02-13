@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Love Message</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
@@ -90,28 +89,59 @@ button:hover {
   line-height: 1.6;
 }
 
+.footer-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+.footer-buttons button {
+  flex: 1;
+}
+
 .heart {
   font-size: 20px;
   margin-bottom: 6px;
   color: #F7C02F;
 }
 
-.surprise-note {
-  margin-top: 16px;
-  font-size: 13px;
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.modal-content img {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.close-btn {
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  background: #F7C02F;
   color: #3D230A;
-}
-
-.back-heart {
-  margin-top: 6px;
-  font-size: 28px;
   cursor: pointer;
-  transition: transform 0.2s ease;
-  display: inline-block;
-  color: #F7C02F;
 }
 
-.back-heart:hover { transform: scale(1.2); }
+.close-btn:hover { transform: scale(1.05); }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
@@ -126,7 +156,6 @@ button:hover {
   <div class="heart">💗</div>
   <h2>Hi Vabe!</h2>
   <div class="subtitle">One question before we continue...</div>
-
   <input type="text" id="answer" placeholder="Sure or No?" />
   <button onclick="checkLove()">Answer</button>
 </div>
@@ -134,7 +163,6 @@ button:hover {
 <div class="card" id="message-box" style="display:none;">
   <div class="heart">💌</div>
   <h3>This is for you</h3>
-
   <div id="message"></div>
 
   <div class="details">
@@ -142,12 +170,32 @@ button:hover {
     📅 <strong>Date:</strong> February 15, 2026<br>
     ⏰ <strong>Time:</strong> 10:00 AM
   </div>
+
+  <div class="footer-buttons">
+    <button onclick="openModal('yes')">Yes</button>
+    <button onclick="openModal('no')">No</button>
+  </div>
+</div>
+
+<!-- YES MODAL -->
+<div class="modal" id="yesModal">
+  <div class="modal-content">
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExcmcxNjQxMXNtem5lZWFqc3d1cDFqbXd2eTJrOXRscTN2czBxbjZhNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/MDJ9IbxxvDUQM/giphy.gif" alt="Yes GIF">
+    <button class="close-btn" onclick="closeModal('yes')">Close</button>
+  </div>
+</div>
+
+<!-- NO MODAL -->
+<div class="modal" id="noModal">
+  <div class="modal-content">
+    <img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExbDZlcTFpb213NThldTNzMnp5b3hyajRzZGhvZ3RyZzJ1bjd4ZWtjZyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/esuCuMhXE4kksVpqbB/giphy.gif" alt="No GIF">
+    <button class="close-btn" onclick="closeModal('no')">Close</button>
+  </div>
 </div>
 
 <script>
 function checkLove() {
   const answer = document.getElementById('answer').value.trim().toLowerCase();
-
   if(answer === 'sure') {
     document.getElementById('login-box').style.display = 'none';
     document.getElementById('message-box').style.display = 'block';
@@ -173,6 +221,22 @@ function typeWriter(text, i) {
   if(i < text.length) {
     document.getElementById('message').innerHTML += text.charAt(i);
     setTimeout(() => typeWriter(text, i + 1), 35);
+  }
+}
+
+function openModal(type) {
+  if(type === 'yes') {
+    document.getElementById('yesModal').style.display = 'flex';
+  } else {
+    document.getElementById('noModal').style.display = 'flex';
+  }
+}
+
+function closeModal(type) {
+  if(type === 'yes') {
+    document.getElementById('yesModal').style.display = 'none';
+  } else {
+    document.getElementById('noModal').style.display = 'none';
   }
 }
 </script>
